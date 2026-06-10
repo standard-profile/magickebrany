@@ -47,7 +47,7 @@ const GATE_BODY = {
   3: `<p><em>„Výborně! Odhalili jste rod, který vlastnil Roudnici po staletí."</em></p>
       <p><strong>Přestavba století:</strong> Lobkowiczové přestavěli středověký biskupský hrad na monumentální barokní zámek s více než <strong>200 místnostmi</strong>.</p>
       <p><strong>Paní Polyxena:</strong> Polyxena byla nesmírně energická a přísná žena. Traduje se, že po smrti neopustila zámek proto, aby zde hlídala obří rodový poklad plný stříbra schovaný v tajné místnosti hluboko ve sklepení. Podle starých zápisů ji v chodbách za bílého dne potkal vyděšený zámecký kostelník. Přízrak mu tehdy přísně vyčetl, že špatně hlídá stříbrnici a nechává odemčené dveře. Než stihlo odbít poledne, ukázala mu prý tajné dveře plné pokladů a pak zmizela v kamenné zdi.</p>
-      <p><strong>Poklad v knihovně:</strong> Zhromáždili roudnickou sbírku obrazů a vzácných rukopisů.</p>
+      <p><strong>Poklad v knihovně:</strong> Shromáždili roudnickou sbírku obrazů a vzácných rukopisů.</p>
       <p>Dnes rodina zámek opět vlastní.</p>`,
   4: `<p><em>„Úžasné! Rozluštili jste celé tajemství!"</em></p>
       <p>Kratochvílova rozhledna je architektonickým klenotem Roudnice.</p>
