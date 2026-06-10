@@ -465,6 +465,8 @@ function renderGate3() {
     const boardW = br.width;
     const boardH = br.height;
     const placed = new Set();
+    const onBoard = new Set();
+    let solved = false;
 
     const items = PUZZLE_PIECES.map(p => createPieceWrapper(p, boardW, boardH));
     items.sort(() => Math.random() - 0.5);
@@ -597,9 +599,10 @@ function renderGate3() {
             el.style.transform = 'scale(1)';
             item.scale = 1;
             el.style.zIndex = '';
+            onBoard.add(item.id);
 
-            // Tolerancia ~30 % menšej strany dielika.
-            const tol = Math.min(item.w, item.h) * 0.3;
+            // Tolerancia ~50 % menšej strany dielika (informatívne pre counter).
+            const tol = Math.min(item.w, item.h) * 0.5;
             const isClose = Math.abs(localLeft - item.homeLeft) <= tol &&
                             Math.abs(localTop  - item.homeTop)  <= tol;
             if (isClose) placed.add(item.id);
@@ -607,6 +610,7 @@ function renderGate3() {
           } else {
             // Mimo boardu → návrat do zásobníka.
             placed.delete(item.id);
+            onBoard.delete(item.id);
             tray.appendChild(el);
             el.style.position = 'absolute';
             el.style.left = item.originX + 'px';
@@ -617,17 +621,33 @@ function renderGate3() {
           }
 
           status.textContent = `Složeno: ${placed.size} / ${PUZZLE_TOTAL}`;
-          if (placed.size === PUZZLE_TOTAL) {
-            // Vizuálna odmena: zarovnaj všetkých 20 dielikov presne.
-            items.forEach(it => {
-              it.el.style.left = it.homeLeft + 'px';
-              it.el.style.top  = it.homeTop + 'px';
-              it.el.classList.add('placed');
-            });
-            status.textContent = '🔓 Erb je složen!';
-            $('#g3-feedback').textContent = 'Výborně! Kód: LOBKOWICZ';
-            $('#g3-feedback').className = 'feedback ok';
-            setTimeout(() => unlockGate(3), 1100);
+
+          // Súdržnosť mriežky: ak sú všetky dieliky na ploche a ich vzájomné
+          // rozostupy sedia (môžu byť celé spolu posunuté), počíta sa to ako hotovo.
+          if (!solved && onBoard.size === PUZZLE_TOTAL) {
+            const offsets = items.map(it => ({
+              dx: parseFloat(it.el.style.left) - it.homeLeft,
+              dy: parseFloat(it.el.style.top)  - it.homeTop,
+            }));
+            const avgDx = offsets.reduce((s, o) => s + o.dx, 0) / PUZZLE_TOTAL;
+            const avgDy = offsets.reduce((s, o) => s + o.dy, 0) / PUZZLE_TOTAL;
+            const allowed = Math.min(items[0].w, items[0].h) * 0.35;
+            const coherent = offsets.every(o =>
+              Math.abs(o.dx - avgDx) <= allowed && Math.abs(o.dy - avgDy) <= allowed
+            );
+            if (coherent) {
+              solved = true;
+              // Vizuálna odmena: zarovnaj všetkých 20 dielikov presne na home pozíciu.
+              items.forEach(it => {
+                it.el.style.left = it.homeLeft + 'px';
+                it.el.style.top  = it.homeTop + 'px';
+                it.el.classList.add('placed');
+              });
+              status.textContent = '🔓 Erb je složen!';
+              $('#g3-feedback').textContent = 'Výborně! Kód: LOBKOWICZ';
+              $('#g3-feedback').className = 'feedback ok';
+              setTimeout(() => unlockGate(3), 1100);
+            }
           }
         };
 
