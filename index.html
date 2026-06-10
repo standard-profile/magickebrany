@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2b1810" />
+  <title>Tajemství názvu města Roudnice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ STOPKY (zobrazené počas hry) ============ -->
+  <header id="timer-bar" class="hidden">
+    <div class="timer-team">Tým: <span id="team-display">—</span></div>
+    <div class="timer-clock" id="timer-clock">00:00</div>
+    <div class="timer-progress">
+      <span class="gate-pill" data-gate="1">1</span>
+      <span class="gate-pill" data-gate="2">2</span>
+      <span class="gate-pill" data-gate="3">3</span>
+      <span class="gate-pill" data-gate="4">4</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ INTRO ============ -->
+    <section id="screen-intro" class="screen active">
+      <div class="intro-container">
+        <h1 class="title-main">Tajemství<br/>názvu města<br/>Roudnice</h1>
+        <p class="subtitle">Otevřete čtyři brány a poznejte historii města</p>
+
+        <form id="intro-form" class="intro-form" autocomplete="off">
+          <label for="team-name">Název vašeho týmu</label>
+          <input id="team-name" type="text" maxlength="30" required placeholder="napr. Roudničtí rytíři" />
+          <button type="submit" id="btn-start" class="btn btn-start">START HRY</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ HRA ============ -->
+    <section id="screen-game" class="screen">
+      <div class="game-intro">
+        <h2>Otevřete čtyři brány Roudnice</h2>
+        <p>Každá brána ukrývá tajemství jedné historické osobnosti. Pořadí je na vás.</p>
+      </div>
+      <div class="gates" id="gates">
+        <!-- Brána 1 -->
+        <article class="gate locked" data-gate="1">
+          <div class="gate-inner">
+            <div class="gate-front">
+              <div class="gate-img" style="background-image:url('assets/biskup.jpg')"></div>
+              <div class="gate-front-overlay">
+                <div class="lock-icon">&#128274;</div>
+                <h3>Brána biskupa</h3>
+                <p>Biskup Jan IV. z Dražíc</p>
+                <button class="btn btn-gate" data-action="open-task" data-gate="1">Vstoupit</button>
+              </div>
+            </div>
+            <div class="gate-back">
+              <div class="unlock-badge">&#128275; Úspěch!</div>
+              <h3>Brána biskupa Jana je otevřena.</h3>
+              <p class="gate-body" id="gate-body-1"></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Brána 2 -->
+        <article class="gate locked" data-gate="2">
+          <div class="gate-inner">
+            <div class="gate-front">
+              <div class="gate-img" style="background-image:url('assets/nepomucky.jpg')"></div>
+              <div class="gate-front-overlay">
+                <div class="lock-icon">&#128274;</div>
+                <h3>Brána světce</h3>
+                <p>Jan Nepomucký</p>
+                <button class="btn btn-gate" data-action="open-task" data-gate="2">Vstoupit</button>
+              </div>
+            </div>
+            <div class="gate-back">
+              <div class="unlock-badge">&#128275; Tajemství odhaleno!</div>
+              <h3>Tajemství roudnické cely odhaleno!</h3>
+              <p class="gate-body" id="gate-body-2"></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Brána 3 -->
+        <article class="gate locked" data-gate="3">
+          <div class="gate-inner">
+            <div class="gate-front">
+              <div class="gate-img" style="background-image:url('assets/lobkowicz.jpg')"></div>
+              <div class="gate-front-overlay">
+                <div class="lock-icon">&#128274;</div>
+                <h3>Brána šlechty</h3>
+                <p>Václav Eusebius z Lobkowicz</p>
+                <button class="btn btn-gate" data-action="open-task" data-gate="3">Vstoupit</button>
+              </div>
+            </div>
+            <div class="gate-back">
+              <div class="unlock-badge">&#128275; Brána pánů ze zámku dokořán!</div>
+              <h3>Brána pánů ze zámku dokořán!</h3>
+              <p class="gate-body" id="gate-body-3"></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Brána 4 -->
+        <article class="gate locked" data-gate="4">
+          <div class="gate-inner">
+            <div class="gate-front">
+              <div class="gate-img" style="background-image:url('assets/kratochvil.jpg')"></div>
+              <div class="gate-front-overlay">
+                <div class="lock-icon">&#128274;</div>
+                <h3>Brána rozhledny</h3>
+                <p>Václav Kratochvíl</p>
+                <button class="btn btn-gate" data-action="open-task" data-gate="4">Vstoupit</button>
+              </div>
+            </div>
+            <div class="gate-back">
+              <div class="unlock-badge">&#128275; Poslední brána padla!</div>
+              <h3>Výhled z rozhledny je váš!</h3>
+              <p class="gate-body" id="gate-body-4"></p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ OUTRO ============ -->
+    <section id="screen-outro" class="screen">
+      <div class="outro-container">
+        <h1 class="title-main">GRATULUJEME,<br/>DOKÁZALI JSTE TO!</h1>
+        <p class="outro-team">Tým <strong id="outro-team-name">—</strong></p>
+        <p class="outro-time">Váš čas: <strong id="outro-time">—</strong></p>
+
+        <div class="secret-box">
+          <h2>Tajemství názvu</h2>
+          <p>
+            Jedná se o jedno z <strong>nejstarších českých měst</strong>.
+            Původní název <em>Rúdník</em> či <em>Rúdnica</em> je odvozen
+            od vyvěrajícího <strong>rudného pramene</strong>, kolem kterého město vzniklo.
+          </p>
+          <div class="secret-img" style="background-image:url('assets/pramen.jpg')"></div>
+        </div>
+
+        <div class="outro-actions">
+          <button class="btn btn-start" id="btn-play-again">Hrát znovu</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ MODÁL ÚLOH ============ -->
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" data-action="close-modal"></div>
+    <div class="modal-window" role="dialog" aria-modal="true">
+      <button class="modal-close" data-action="close-modal" aria-label="Zavřít">&times;</button>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ============ FANFÁR po odomknutí ============ -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
