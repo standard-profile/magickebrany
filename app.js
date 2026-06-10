@@ -53,7 +53,7 @@ const GATE_BODY = {
       <p>Kratochvílova rozhledna je architektonickým klenotem Roudnice.</p>
       <p><strong>Zázrak z roku 1935:</strong> Otevřena v duchu funkcionalismu – stavba z betonu, žádné středověké kameny.</p>
       <p><strong>Nízko a přesto vysoko:</strong> Jen 230 m n. m., ale díky poloze na skále nabízí výhled na celé České středohoří.</p>
-      <p><strong>Jméno po lékaři:</strong> Pojmenovaná po Václavu Kratochvílovi – oblíbeném roudnickém lékaři a vlastenci.</p>`,
+      <p><strong>Jméno po Václavovi Kratochvílovi:</strong> Jako uznávaný zástupce českého venkova dostal v květnu 1868 obrovskou čest – mohl slavnostně poklepat na základní kámen Národního divadla v Praze jménem venkovských obcí, a to s heslem „S rázností k svobodě".</p>`,
 };
 
 // =============================================================
@@ -585,10 +585,10 @@ function renderGate3() {
           const pieceTop  = ev.clientY - offsetY;
           const centerX = pieceLeft + item.w / 2;
           const centerY = pieceTop  + item.h / 2;
-          const onBoard = centerX >= boardRect.left && centerX <= boardRect.right &&
-                          centerY >= boardRect.top  && centerY <= boardRect.bottom;
+          const droppedOnBoard = centerX >= boardRect.left && centerX <= boardRect.right &&
+                                 centerY >= boardRect.top  && centerY <= boardRect.bottom;
 
-          if (onBoard) {
+          if (droppedOnBoard) {
             // Voľné položenie: dielik ostane tam, kam ho žiak pustil.
             const localLeft = pieceLeft - boardRect.left;
             const localTop  = pieceTop  - boardRect.top;
