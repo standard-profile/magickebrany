@@ -46,7 +46,7 @@ const GATE_BODY = {
       <p><strong>Karlův most:</strong> Po roudnických událostech ho v Praze svrhli z Karlova mostu do Vltavy.</p>`,
   3: `<p><em>„Výborně! Odhalili jste rod, který vlastnil Roudnici po staletí."</em></p>
       <p><strong>Přestavba století:</strong> Lobkowiczové přestavěli středověký biskupský hrad na monumentální barokní zámek s více než <strong>200 místnostmi</strong>.</p>
-      <p><strong>Paní Polyxena:</strong> Přinesla do města slavnou sošku Pražského Jezulátka.</p>
+      <p><strong>Paní Polyxena:</strong> Polyxena byla nesmírně energická a přísná žena. Traduje se, že po smrti neopustila zámek proto, aby zde hlídala obří rodový poklad plný stříbra schovaný v tajné místnosti hluboko ve sklepení. Podle starých zápisů ji v chodbách za bílého dne potkal vyděšený zámecký kostelník. Přízrak mu tehdy přísně vyčetl, že špatně hlídá stříbrnici a nechává odemčené dveře. Než stihlo odbít poledne, ukázala mu prý tajné dveře plné pokladů a pak zmizela v kamenné zdi.</p>
       <p><strong>Poklad v knihovně:</strong> Zhromáždili roudnickou sbírku obrazů a vzácných rukopisů.</p>
       <p>Dnes rodina zámek opět vlastní.</p>`,
   4: `<p><em>„Úžasné! Rozluštili jste celé tajemství!"</em></p>
@@ -78,6 +78,7 @@ function init() {
   });
 
   $('#btn-play-again').addEventListener('click', () => location.reload());
+  $('#btn-reveal').addEventListener('click', finishGame);
 
   // Brány
   $$('[data-action="open-task"]').forEach(btn => {
@@ -144,12 +145,18 @@ function unlockGate(n) {
   closeModal();
 
   if (state.unlocked.size === 4) {
-    setTimeout(finishGame, 1200);
+    stopTimer();
+    setTimeout(() => {
+      const reveal = $('#reveal-wrap');
+      if (reveal) {
+        reveal.classList.remove('hidden');
+        reveal.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, 1200);
   }
 }
 
 function finishGame() {
-  stopTimer();
   $('#outro-team-name').textContent = state.team;
   $('#outro-time').textContent = formatTimePretty(state.finalSeconds);
   timerBar.classList.add('hidden');
@@ -192,7 +199,7 @@ function showToast(msg) {
 // BRÁNA 1 – POSTUPNÉ INDÍCIE → 4 CIFRY
 // =============================================================
 const GATE1_CLUES = [
-  { q: 'Počet ocasů, které má český lev ve státním znaku.', a: 1 },
+  { q: 'Kolik řek protéka Roudnici nad Labem?', a: 1 },
   { q: 'Kolik barev má česká vlajka?', a: 3 },
   { q: 'Kolik historických zemí tvoří Českou republiku?', a: 3 },
   { q: 'Kolik pruhů má česká státní trikolóra?', a: 3 },
